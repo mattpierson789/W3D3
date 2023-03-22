@@ -1,4 +1,4 @@
-
+require "byebug"
 
 #Range 
 
@@ -148,22 +148,41 @@ p new_a_1
 
 # You shouldn't have to pass any arrays between methods; you should be able to do this just passing a single argument for the number of Fibonacci numbers requested.
 
-def fibs(n)
+def fibs_recur(n)
     return [] if n == 0
     return [0] if n == 1
-    return [1, 2] if n == 2
+    return [0, 1] if n == 2
 
-    prev_fibs = fibs(n-1)
+    prev_fibs = fibs_recur(n-1)
     prev_fibs << prev_fibs[-1] + prev_fibs[-2]
 end
 
-p fibs(0)
-p fibs(1)
-p fibs(2)
-p fibs(3)
-p fibs(6)
-p fibs(10)
+p fibs_recur(0)
+p fibs_recur(1)
+p fibs_recur(2)
+p fibs_recur(3)
+p fibs_recur(6)
+p fibs_recur(10)
 
+def fibs_iter(n)
+    return [] if n == 0
+    return [0] if n == 1
+    return [1, 1] if n == 2
+
+    seq = [0, 1, 1]
+
+    while seq.length < n
+        seq << seq[-1] + seq[-2]
+    end
+    seq
+end
+
+p fibs_iter(0)
+p fibs_iter(1)
+p fibs_iter(2)
+p fibs_iter(3)
+p fibs_iter(6)
+p fibs_iter(10)
 
 
 def binary_search(array, target)
@@ -175,18 +194,59 @@ def binary_search(array, target)
 
     return i if array[i] == target # false 
 
-   if array[i] > target                     #array[2] == 3; true
-        binary_search(array[0...i], target) #   [1,2]
+    left = array[0...i]
+    right = array[i+1..-1]
 
-    else binary_search(array[i+1..-1], target)    
+    if array[i] > target                     #array[2] == 3; true
+        binary_search(left, target) #   [1,2]
+    else
+        binary_search(right, target) + i + 1    
         
-    end 
-
-    return nil 
-
+    end
 end 
 
 
 array1 = [1,2,3,4,5,6]
 
 p binary_search(array1, 2)
+p binary_search(array1, 4)
+
+puts "__________________________"
+
+def merge_sort(arr)
+    return arr if arr.length <= 1
+
+    mid = arr.length / 2
+    left = arr[0...mid]
+    right = arr[mid..-1]
+
+    left_sorted = merge_sort(left)
+    right_sorted = merge_sort(right)
+
+    merge(left_sorted, right_sorted)
+end
+
+def merge(left, right)
+    result = []
+
+    while !left.empty? && !right.empty?
+        # debugger
+        if left.first < right.first
+            result << left.shift
+        else
+            result << right.shift
+        end
+    end
+
+    # if left.empty?
+    #     result += right
+    # elsif right.empty?
+    #     result += left
+    # end
+    result + left + right
+end
+
+arr_1 = [4, 2, 3, 8, 43, 9, 3, 5, 3, 23]
+arr_2 = [1, 9, 10, 3, 14, 21, 9, 8, 2]
+p merge_sort(arr_1)
+p merge_sort(arr_2)
