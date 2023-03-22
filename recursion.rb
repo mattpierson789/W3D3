@@ -189,27 +189,29 @@ def binary_search(array, target)
 
     return nil if array.empty?
 
-    i = (array.length) / 2     # 5 ; 1  # we can call this mid
-                          # 2; 0 
+    i = (array.length) / 2
 
-    return i if array[i] == target # false 
+    return i if array[i] == target
 
     left = array[0...i]
     right = array[i+1..-1]
 
-    if array[i] > target                     #array[2] == 3; true
-        binary_search(left, target) #   [1,2]
+    if array[i] > target
+        binary_search(left, target)
     else
-        binary_search(right, target) + i + 1    
-        
+        result = binary_search(right, target)
+        return nil if result.nil?
+        result += i + 1
     end
 end 
 
 
-array1 = [1,2,3,4,5,6]
+array = [1, 2, 3, 4, 5, 6, 9]
 
-p binary_search(array1, 2)
-p binary_search(array1, 4)
+p binary_search(array, 2)
+p binary_search(array, 4)
+p binary_search(array, 8)
+p binary_search([], 10)
 
 puts "__________________________"
 
