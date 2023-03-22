@@ -164,3 +164,29 @@ p fibs(3)
 p fibs(6)
 p fibs(10)
 
+
+
+def binary_search(array, target)
+
+    return nil if array.empty?
+
+    i = (array.length) / 2     # 5 ; 1  # we can call this mid
+                          # 2; 0 
+
+    return i if array[i] == target # false 
+
+   if array[i] > target                     #array[2] == 3; true
+        binary_search(array[0...i], target) #   [1,2]
+
+    else binary_search(array[i+1..-1], target)    
+        
+    end 
+
+    return nil 
+
+end 
+
+
+array1 = [1,2,3,4,5,6]
+
+p binary_search(array1, 2)
