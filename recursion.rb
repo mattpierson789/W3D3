@@ -69,6 +69,26 @@ end
 p exponention_1(5,1)
 
 
+def exponention_2(n, exp)
+
+    return 1 if exp == 0
+    return n if exp == 1
+     
+
+    if exp.even?
+        (exponention_2(n, (exp / 2))) ** 2  # if n is even 
+    else
+        n * (exponention_2(n, (exp - 1) / 2) ** 2)  # if n is odd
+    end  
+
+end 
+
+p exponention_2(6,2)
+p exponention_2(5,3)
+p exponention_2(5,4)
+p exponention_2(5,1)
+
 
 def 
+
 
