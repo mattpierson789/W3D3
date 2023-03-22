@@ -89,6 +89,78 @@ p exponention_2(5,4)
 p exponention_2(5,1)
 
 
-def 
+# Deep dup
+# The #dup method doesn't make a deep copy:
 
+# robot_parts = [
+#   ["nuts", "bolts", "washers"],
+#   ["capacitors", "resistors", "inductors"]
+# ]
+
+# robot_parts_copy = robot_parts.dup
+
+# # shouldn't modify robot_parts
+# robot_parts_copy[1] << "LEDs"
+# # but it does
+# robot_parts[1] # => ["capacitors", "resistors", "inductors", "LEDs"]
+# When you dup an Array, it creates a new array to hold the elements, but doesn't recursively dup any arrays contained therein. So the dup method creates one new array, but just copies over references to the original interior arrays.
+
+# Sometimes you want a shallow dup and sometimes you want a deep dup. Ruby keeps things simple by giving you shallow dup, and letting you write deep dup yourself.
+
+# Using recursion and the is_a? method, write an Array#deep_dup method that will perform a "deep" duplication of the interior arrays.
+
+# Note: For simplicity's sake, you are only going to ensure the deep duplication of arrays. Don't worry about deep-duping (or regular-duping) other types of mutable objects (like strings, hashes, instances of custom classes, etc.), since this would require that you implement a deep dup method for each of those classes as well.
+
+# It's okay to iterate over array elements using the normal each for this one. :-)
+
+# You should be able to handle "mixed" arrays. For instance: [1, [2], [3, [4]]].
+
+class Array
+    def deep_dup
+        new_arr = []
+        self.each do |ele|
+            if !ele.is_a?(Array)
+                new_arr << ele
+            else
+                new_arr << ele.deep_dup
+            end
+        end
+        new_arr
+    end
+
+end
+
+array = [1, [2], [3, [4]]]
+new_array = array.deep_dup
+new_array[2] << 0
+p array
+p new_array
+
+
+a_1 = [1,[2]]
+new_a_1 = a_1.deep_dup
+new_a_1[1] << 4
+p a_1
+p new_a_1
+
+# Fibonacci
+# Write a recursive and an iterative Fibonacci method. The method should take in an integer n and return the first n Fibonacci numbers in an array.
+
+# You shouldn't have to pass any arrays between methods; you should be able to do this just passing a single argument for the number of Fibonacci numbers requested.
+
+def fibs(n)
+    return [] if n == 0
+    return [0] if n == 1
+    return [1, 2] if n == 2
+
+    prev_fibs = fibs(n-1)
+    prev_fibs << prev_fibs[-1] + prev_fibs[-2]
+end
+
+p fibs(0)
+p fibs(1)
+p fibs(2)
+p fibs(3)
+p fibs(6)
+p fibs(10)
 
