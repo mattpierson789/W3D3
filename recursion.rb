@@ -190,3 +190,17 @@ end
 array1 = [1,2,3,4,5,6]
 
 p binary_search(array1, 2)
+
+
+
+def fibs (array)
+
+    return [] if array.empty?
+    return [0] if array == 1
+    return [1, 2] if array == 2
+
+    prev_fibs = fibs(array - 1)
+    prev_fibs << prev_fibs[-1] + prev_fibs[-2]
+
+end 
+
